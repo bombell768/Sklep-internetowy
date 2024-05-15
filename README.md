@@ -1,1 +1,3 @@
-# Lista10_v2
+# Sklep internetowy
+
+Projekt aplikacji webowej - sklep intenetowy z wykorzystaniem frameworka .NET.
