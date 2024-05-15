@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<h2>Order Confirmation</h2>
+
+<div>
+    
+    <p>@ViewBag.FirstName @ViewBag.LastName</p>
+
+    <p>@ViewBag.Street @ViewBag.BuildingNumber @if (!string.IsNullOrEmpty(ViewBag.ApartmentNumber))
+        {
+            <text>/ @ViewBag.ApartmentNumber </text>
+        }
+    </p>
+    <p>@ViewBag.PostalCode, @ViewBag.City</p>
+
+
+    <p>Payment Method: @ViewBag.PaymentMethod</p>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to Shop</a>
+</div>

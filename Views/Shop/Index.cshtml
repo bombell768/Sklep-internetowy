@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Lista10_v2.Models.Category>
+
+<h1>Categories</h1>
+
+<ul>
+    @foreach (var category in Model)
+    {
+        <li><a asp-action="Category" asp-route-id="@category.Id">@category.Name</a></li>
+    }
+</ul>

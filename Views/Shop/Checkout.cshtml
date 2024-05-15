@@ -1,0 +1,99 @@
+﻿@model Lista10_v2.Models.Category
+
+<h1>Checkout</h1>
+
+@if (ViewData["CartItems"] != null && ViewData["Articles"] != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Expiration Date</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["CartItems"] as Dictionary<int, int>)
+            {
+                var article = (ViewData["Articles"] as List<Article>).FirstOrDefault(a => a.Id == item.Key);
+
+                if (article != null)
+                {
+                    <tr>
+                        <td>@article.Name</td>
+                        <td>@article.Price</td>
+                        <td>@article.ExpirationDate</td>
+                        <td><img src="@article.ImagePath" alt="@article.Name" width="100" /></td>
+                        <td>@item.Value</td>
+                        <td>@(article.Price * item.Value)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <h3>Total: @((ViewData["Articles"] as List<Article>).Sum(a => a.Price * (ViewData["CartItems"] as Dictionary<int, int>)[a.Id]))</h3>
+    </div>
+    <div>
+        <h2>Delivery form</h2>
+        <h3>Personal Information</h3>
+        <form asp-action="ConfirmOrder" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" required>
+            </div>
+            <p>
+            </p>
+            <h3>Delivery Address</h3>
+            <div class="form-group">
+                <label for="street">Street:</label>
+                <input type="text" class="form-control" id="street" name="street" required>
+            </div>
+            <div class="form-group">
+                <label for="buildingNumber">Building Number:</label>
+                <input type="text" class="form-control" id="buildingNumber" name="buildingNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="apartmentNumber">Apartment Number: (optional)</label>
+                <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber">
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" class="form-control" id="postalCode" name="postalCode" required>
+            </div>
+
+            <h3>Payment Method</h3>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method:</label>
+                <select class="form-control" id="paymentMethod" name="paymentMethod" required>
+                    <option value="transfer">Transfer</option>
+                    <option value="blik">BLIK</option>
+                    <option value="onDelivery">Cash on Delivery</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Confirm Order</button>
+        </form>
+    </div>
+
+}
+else
+{
+    <p>Your shopping cart is empty.</p>
+}
+
+<div>
+    <a asp-action="Cart" class="btn btn-primary">Back to Cart</a>
+</div>

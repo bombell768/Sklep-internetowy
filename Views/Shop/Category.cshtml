@@ -1,0 +1,47 @@
+﻿@model Lista10_v2.Models.Category
+
+<h1>@Model.Name</h1>
+
+@if (Model.Articles.Any())
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Expiration Date</th>
+                <th>Image</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model.Articles)
+            {
+                <tr>
+                    <td>@article.Name</td>
+                    <td>@article.Price</td>
+                    <td>@article.ExpirationDate</td>
+                    <td><img src="@article.ImagePath" alt="@article.Name" width="100" /></td>
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-action="AddToCart" asp-controller="Shop" asp-route-id="@article.Id">Add to Cart</a>
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No articles found in this category.</p>
+}
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to Categories</a>
+</div>
+
+
